@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /versioni/
+
+Sitemap: https://mangiaprato.com/sitemap.xml

@@ -1,0 +1,42 @@
+{
+  "_come_si_aggiorna": "Una volta al mese si cambia solo questo file. In 'mese' scrivi per esempio \"Ottobre 2026\" (lascia \"\" per usare il mese corrente). In ogni portata metti fino a 5 piatti: {\"n\":\"nome del piatto\",\"d\":\"descrizione breve\"}. Se la lista 'piatti' resta vuota, sul sito compare la frase in 'descr'.",
+  "mese": "",
+  "settimanale": "",
+  "prezzi": [
+    { "voce": "Pizze", "valore": "6 – 13 €" },
+    { "voce": "Spesa media", "valore": "30 €" },
+    { "voce": "Senza glutine", "valore": "Su richiesta" }
+  ],
+  "portate": [
+    {
+      "nome": "Antipasti",
+      "foto": "img/p-tagliere.jpg",
+      "descr": "Salumi, formaggi, mostarde e crostoni.",
+      "piatti": []
+    },
+    {
+      "nome": "Primi",
+      "foto": "img/p-pasta.jpg",
+      "descr": "Pasta fresca fatta in casa, ogni giorno.",
+      "piatti": []
+    },
+    {
+      "nome": "Secondi",
+      "foto": "img/n-pollo.jpg",
+      "descr": "Carne locale e pesce, dalla tradizione toscana.",
+      "piatti": []
+    },
+    {
+      "nome": "Burger",
+      "foto": "img/n-burger.jpg",
+      "descr": "Burger gourmet con il pane della nostra cucina.",
+      "piatti": []
+    },
+    {
+      "nome": "Dolci",
+      "foto": "img/p-millefoglie.jpg",
+      "descr": "La pasticceria di casa.",
+      "piatti": []
+    }
+  ]
+}
