@@ -741,10 +741,10 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
     </div>
     <div class="hero-media">
       <div class="main">
-        <img src="img/h-ciabattina-forno.jpg" alt="Una ciabattina con pomodorini davanti al forno a legna acceso" fetchpriority="high">
+        <img src="img/r-hero-ciabattina.jpg" alt="Una ciabattina con pomodorini, mozzarella e pesto appena sfornata" fetchpriority="high">
       </div>
-      <div class="side"><img src="img/n-staff.jpg" alt="La tavolata di Ferragosto con lo staff in giardino"></div>
-      <div class="side"><img src="img/p-pizza.jpg" alt="Una margherita appena sfornata, vista dall'alto"></div>
+      <div class="side"><img src="img/r-hero-ferragosto.jpg" alt="La tavolata di Ferragosto con lo staff in giardino"></div>
+      <div class="side"><img src="img/r-hero-margherita.jpg" alt="Una margherita appena sfornata, vista dall'alto"></div>
       <div class="badge"><strong>85<small>/100</small></strong><span>Gambero Rosso<br>Pizzerie d'Italia</span></div>
     </div>
   </div>
@@ -798,21 +798,21 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
     </div>
     <div class="dough">
       <article class="dcard">
-        <img src="img/p-pizzaiolo.jpg" alt="Il pizzaiolo condisce una napoletana sul marmo" loading="lazy">
+        <img src="img/r-card-napoletana.jpg" alt="Una napoletana appena sfornata" loading="lazy">
         <div class="body"><span class="tag">La classica</span><h3>Napoletana</h3><p>Cornicione alto e morbido, cotta nel forno a legna. Dalle classiche alle proposte della stagione.</p></div>
       </article>
       <article class="dcard">
-        <img src="img/n-ciabattina-pesto.jpg" alt="La ciabattina con pomodorini e pesto appena sfornata" loading="lazy">
+        <img src="img/r-card-ciabattina.jpg" alt="La ciabattina con pomodorini e pesto appena sfornata" loading="lazy">
         <div class="body"><span class="tag">Nata da noi</span><h3>Ciabattina</h3><p>La nostra creazione, messa a punto con il pizzaiolo Salvatore Botta. Il Gambero Rosso la cita come il piatto che ci distingue.</p></div>
       </article>
     </div>
     <div class="strip" id="strip" aria-label="Le pizze, scorrono da sole">
-      <figure><img src="img/s-mozzarella.jpg" alt="" loading="lazy"><figcaption>La stesa, poi la mozzarella</figcaption></figure>
-      <figure><img src="img/s-pomodorini.jpg" alt="" loading="lazy"><figcaption>Pomodorini</figcaption></figure>
-      <figure><img src="img/s-basilico.jpg" alt="" loading="lazy"><figcaption>Basilico fresco</figcaption></figure>
-      <figure><img src="img/s-olio.jpg" alt="" loading="lazy"><figcaption>Un filo d'olio</figcaption></figure>
-      <figure><img src="img/n-ciabattina.jpg" alt="" loading="lazy"><figcaption>La ciabattina</figcaption></figure>
-      <figure><img src="img/s-uva.jpg" alt="" loading="lazy"><figcaption>Schiacciata con l'uva</figcaption></figure>
+      <figure><img src="img/r-s-forno.jpg" alt="" loading="lazy"><figcaption>Appena sfornata</figcaption></figure>
+      <figure><img src="img/r-s-pomodorini.jpg" alt="" loading="lazy"><figcaption>Pomodorini</figcaption></figure>
+      <figure><img src="img/r-s-mozzarella.jpg" alt="" loading="lazy"><figcaption>La stesa, poi la mozzarella</figcaption></figure>
+      <figure><img src="img/r-s-basilico.jpg" alt="" loading="lazy"><figcaption>Basilico fresco</figcaption></figure>
+      <figure><img src="img/r-s-ciabattina.jpg" alt="" loading="lazy"><figcaption>La ciabattina</figcaption></figure>
+      <figure><img src="img/r-s-uva.jpg" alt="" loading="lazy"><figcaption>Schiacciata con l'uva</figcaption></figure>
     </div>
     <p class="strip-hint">Scorrono da sole · trascina o scorri per sfogliarle</p>
   </div>
@@ -1157,19 +1157,19 @@ const LOCALE = [
   {src:"img/p-specchio.jpg", s:"v", t:"Lo specchio sul giardino", cat:"Giardino"}
 ];
 
-/* Bacheca: una riga per foto. Per aggiungerne: metti il file in img/ e aggiungi una riga.
+/* Bacheca: una riga per foto. Le prime 8 sono i ritocchi r-* (python genera_ritocchi.py). Per aggiungerne: metti il file in img/ e aggiungi una riga.
    Solo persone contente, con la pizza o a tavola; le piu' allegre e luminose in testa.
    Tutte da post e reel di @mangia_prato (username verificato nei .json di materiali/);
    i file j-*, m-* e v-* sono fotogrammi dei reel o foto dei post. */
 const MOMENTI = [
-  {src:"img/j-squadra-festa.jpg", w:720, h:947, cat:"Sorrisi", t:"La squadra al completo"},
-  {src:"img/b-schiacciata.jpg", w:900, h:1198, cat:"Con la pizza", t:"La schiacciata con l'uva"},
-  {src:"img/m-hugo.jpg", w:900, h:1200, cat:"Brindisi", t:"L'Hugo di Melania"},
-  {src:"img/n-pizzaiolo.jpg", w:900, h:1200, cat:"Con la pizza", t:"La ciabattina, appena sfornata"},
-  {src:"img/m-famiglia.jpg", w:583, h:864, cat:"Sorrisi", t:"Diego, Melania e Luca"},
-  {src:"img/j-risata.jpg", w:800, h:853, cat:"A tavola", t:"Una risata tra amici"},
-  {src:"img/j-oktober.jpg", w:800, h:1109, cat:"A tavola", t:"Il vino arriva al tavolo"},
-  {src:"img/m-gaia-franco.jpg", w:900, h:1200, cat:"Sorrisi", t:"Gaia e Franco"},
+  {src:"img/r-m-squadra-festa.jpg", w:692, h:858, cat:"Sorrisi", t:"La squadra al completo"},
+  {src:"img/r-m-schiacciata.jpg", w:900, h:863, cat:"Con la pizza", t:"La schiacciata con l'uva"},
+  {src:"img/r-m-hugo.jpg", w:900, h:1066, cat:"Brindisi", t:"L'Hugo di Melania"},
+  {src:"img/r-m-pizzaiolo.jpg", w:900, h:1500, cat:"Con la pizza", t:"La ciabattina, appena sfornata"},
+  {src:"img/r-m-famiglia.jpg", w:572, h:799, cat:"Sorrisi", t:"Diego, Melania e Luca"},
+  {src:"img/r-m-risata.jpg", w:720, h:723, cat:"A tavola", t:"Una risata tra amici"},
+  {src:"img/r-m-oktober.jpg", w:720, h:889, cat:"A tavola", t:"Il vino arriva al tavolo"},
+  {src:"img/r-m-gaia-franco.jpg", w:900, h:1067, cat:"Sorrisi", t:"Gaia e Franco"},
   {src:"img/j-cin-cin.jpg", w:800, h:1053, cat:"Brindisi", t:"Cin cin!"},
   {src:"img/b-pizzaiolo-verde.jpg", w:800, h:881, cat:"Con la pizza", t:"Una ciabattina in arrivo"},
   {src:"img/m-prima-servizio.jpg", w:900, h:1200, cat:"Sorrisi", t:"Prima del servizio, un momento insieme"},
