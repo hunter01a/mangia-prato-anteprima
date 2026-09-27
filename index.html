@@ -609,6 +609,31 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
 @media (max-width:980px){.team-banner img{aspect-ratio:16/9;object-position:center 69%}}
 @media (max-width:560px){.team-banner img{aspect-ratio:4/3;object-position:center 85%}}
 
+/* ---------- il locale: griglia editoriale ---------- */
+.locale{background:var(--stone)}
+.locale-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(92px,10.5vw,150px);grid-auto-flow:dense;gap:clamp(10px,1.2vw,14px)}
+.ph-l{position:relative;margin:0;padding:0;border:0;overflow:hidden;background:var(--sand);cursor:zoom-in;display:block;width:100%;height:100%}
+.ph-l img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.ph-l:hover img{transform:scale(1.04)}
+.ph-l .cap{position:absolute;left:0;right:0;bottom:0;padding:38px 14px 12px;background:linear-gradient(transparent,rgba(20,17,15,.7));color:#fff;text-align:left;opacity:0;transform:translateY(6px);transition:.3s}
+.ph-l:hover .cap,.ph-l:focus-visible .cap{opacity:1;transform:none}
+.ph-l .cap em{display:block;font:italic 400 17px/1.25 var(--serif)}
+.ph-l .cap span{display:block;font:500 10px/1.3 var(--sans);letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin-top:4px}
+@media (hover:none){.ph-l .cap{opacity:1;transform:none}}
+.ph-l.g{grid-column:span 6;grid-row:span 4}
+.ph-l.gr{grid-column:7 / span 6;grid-row:span 4}
+.ph-l.v{grid-column:span 3;grid-row:span 2}
+.ph-l.o{grid-column:span 6;grid-row:span 2}
+@media (max-width:1000px){
+  .locale-grid{grid-template-columns:repeat(6,1fr);grid-auto-rows:clamp(92px,15vw,150px)}
+  .ph-l.g,.ph-l.gr{grid-column:span 6;grid-row:span 4}
+  .ph-l.o{grid-column:span 6;grid-row:span 2}
+  .ph-l.v{grid-column:span 3;grid-row:span 2}
+}
+@media (max-width:767px){
+  .locale-grid.carousel > .ph-l{aspect-ratio:4/5;height:auto}
+}
+
 /* ---------- caroselli su mobile (sotto 768px; sopra resta la griglia) ---------- */
 .cdots{display:none}
 @media (max-width:767px){
@@ -678,12 +703,12 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
       <span>Mangia</span>
     </a>
     <nav class="menu" id="menu" aria-label="Sezioni del sito">
-      <a href="#storia">Storia</a>
       <a href="#pizza">Pizza</a>
       <a href="#menu-mese">Menu</a>
       <a href="#giardino">Giardino</a>
-      <a href="#quinte">Video</a>
+      <a href="#locale">Il locale</a>
       <a href="#momenti">Momenti</a>
+      <a href="#quinte">Video</a>
       <a href="#squadra">Squadra</a>
       <a href="#visita">Dove siamo</a>
       <span class="nav-cta"><a class="btn wine" href="tel:+390574572917"><svg><use href="#i-phone"/></svg>Prenota: 0574 572917</a></span>
@@ -716,10 +741,10 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
     </div>
     <div class="hero-media">
       <div class="main">
-        <img src="img/h-main.jpg" alt="Una ciabattina appena condita davanti al forno a legna acceso" fetchpriority="high">
+        <img src="img/n-staff.jpg" alt="Una tavolata in giardino con le pizze appena sfornate" fetchpriority="high">
       </div>
-      <div class="side"><img src="img/s-pesto.jpg" alt="Il pesto sulla ciabattina appena sfornata"></div>
-      <div class="side"><img src="img/h-pane.jpg" alt="Il pane davanti al forno a legna"></div>
+      <div class="side"><img src="img/p-pizza.jpg" alt="Una napoletana appena sfornata, vista dall'alto"></div>
+      <div class="side"><img src="img/p-sala-giardino.jpg" alt="La sala coperta che dà sul giardino"></div>
       <div class="badge"><strong>85<small>/100</small></strong><span>Gambero Rosso<br>Pizzerie d'Italia</span></div>
     </div>
   </div>
@@ -773,11 +798,11 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
     </div>
     <div class="dough">
       <article class="dcard">
-        <img src="img/n-napoletana.jpg" alt="Una margherita napoletana con mozzarella e basilico, pronta per il forno" loading="lazy">
+        <img src="img/p-pizzaiolo.jpg" alt="Il pizzaiolo condisce una napoletana sul marmo" loading="lazy">
         <div class="body"><span class="tag">La classica</span><h3>Napoletana</h3><p>Cornicione alto e morbido, cotta nel forno a legna. Dalle classiche alle proposte della stagione.</p></div>
       </article>
       <article class="dcard">
-        <img src="img/n-ciabattina.jpg" alt="La ciabattina con pomodorini, pesto e basilico" loading="lazy">
+        <img src="img/n-ciabattina-pesto.jpg" alt="La ciabattina con pomodorini e pesto appena sfornata" loading="lazy">
         <div class="body"><span class="tag">Nata da noi</span><h3>Ciabattina</h3><p>La nostra creazione, messa a punto con il pizzaiolo Salvatore Botta. Il Gambero Rosso la cita come il piatto che ci distingue.</p></div>
       </article>
     </div>
@@ -831,6 +856,37 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
   </div>
 </section>
 
+<!-- Il locale: tutte le foto jpg buone di @mangia_prato non usate altrove (username verificato nei .json)
+     piu' le p-*.jpg. Le foto stanno nell'array LOCALE; s = misura nella griglia:
+     g grande, gr grande a destra, v verticale, o orizzontale. -->
+<section id="locale" class="locale">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">Il locale</p>
+        <h2>Tra forno, sala <em>e giardino</em></h2>
+      </div>
+      <p class="lead" style="max-width:32ch">Il pane del mattino, la cucina, i tavoli e gli ospiti a quattro zampe.</p>
+    </div>
+    <div class="locale-grid" id="locale-grid"></div>
+  </div>
+</section>
+
+<section id="momenti">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">#MangiaMomenti</p>
+        <h2>La bacheca delle <em>emozioni</em></h2>
+      </div>
+      <p class="lead" style="max-width:32ch">Le vostre serate da noi. Tocca una foto per vederla grande.</p>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="Filtra i momenti"></div>
+    <div class="wall" id="wall"></div>
+    <div class="wall-more"><button class="btn" type="button" id="more">Mostra altri momenti</button></div>
+  </div>
+</section>
+
 <!-- Come nasce una serata: collage in cinque tempi, foto e fotogrammi di @mangia_prato
      (impasto: post Dcd5IybiL1H · forno: post Db5LKGkiKrI · cucina: DdLyojKiKUw · sala: reel DdrVM8tINKn · tavola: reel Dc1ObWvoDV5, tre fotogrammi) -->
 <section id="serata">
@@ -881,21 +937,6 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
     </div>
     <div class="team-banner"><img src="img/n-staff.jpg" alt="Tutta la squadra di Mangia in giardino, attorno alla tavola apparecchiata" loading="lazy"></div>
     <div class="team" id="team"></div>
-  </div>
-</section>
-
-<section id="momenti">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <p class="kicker">#MangiaMomenti</p>
-        <h2>La bacheca delle <em>emozioni</em></h2>
-      </div>
-      <p class="lead" style="max-width:32ch">Le vostre serate da noi. Tocca una foto per vederla grande.</p>
-    </div>
-    <div class="filters" id="filters" role="group" aria-label="Filtra i momenti"></div>
-    <div class="wall" id="wall"></div>
-    <div class="wall-more"><button class="btn" type="button" id="more">Mostra altri momenti</button></div>
   </div>
 </section>
 
@@ -1087,13 +1128,42 @@ const TEAM = [
     d:"Due impasti, lievitazione naturale a temperatura controllata e il forno sempre acceso." }
 ];
 
+/* Il locale: una riga per foto (s = misura nella griglia: g grande, gr grande a destra, v verticale, o orizzontale). */
+const LOCALE = [
+  {src:"img/l-pane-crosta.jpg", s:"g", t:"La crosta del pane", cat:"Forno"},
+  {src:"img/l-farina.jpg", s:"v", t:"Farina e impasto", cat:"Forno"},
+  {src:"img/l-mani-impasto.jpg", s:"v", t:"Le mani nell'impasto", cat:"Forno"},
+  {src:"img/l-mozzarella.jpg", s:"v", t:"La mozzarella, a pezzi", cat:"Forno"},
+  {src:"img/l-pane-crudo.jpg", s:"v", t:"Il pane, prima del forno", cat:"Forno"},
+  {src:"img/p-pergola.jpg", s:"o", t:"La veranda apparecchiata", cat:"Sala"},
+  {src:"img/p-pomodoro.jpg", s:"v", t:"Il pomodoro in giardino", cat:"Giardino"},
+  {src:"img/p-ulivo.jpg", s:"v", t:"L'ulivo del giardino", cat:"Giardino"},
+  {src:"img/l-dolce-salsa.jpg", s:"gr", t:"Il dolce, all'ultimo momento", cat:"Piatti"},
+  {src:"img/l-cane-divano.jpg", s:"v", t:"Ospite sul divanetto", cat:"Amici a quattro zampe"},
+  {src:"img/l-cane-sala.jpg", s:"v", t:"Relax in sala", cat:"Amici a quattro zampe"},
+  {src:"img/l-cane-biondo.jpg", s:"v", t:"Occhi dolci", cat:"Amici a quattro zampe"},
+  {src:"img/l-cane-bianco.jpg", s:"v", t:"In arrivo per cena", cat:"Amici a quattro zampe"},
+  {src:"img/l-sfumare.jpg", s:"v", t:"Si sfuma col vino", cat:"Cucina"},
+  {src:"img/l-vapore.jpg", s:"v", t:"Cuoce piano", cat:"Cucina"},
+  {src:"img/p-burger.jpg", s:"v", t:"Burger e patatine", cat:"Piatti"},
+  {src:"img/p-tortino.jpg", s:"v", t:"Il tortino al cioccolato", cat:"Piatti"},
+  {src:"img/l-polpo-burger.jpg", s:"v", t:"Il Polpo Burger", cat:"Piatti"},
+  {src:"img/l-impiattamento.jpg", s:"v", t:"L'impiattamento", cat:"Cucina"},
+  {src:"img/l-dolce-servito.jpg", s:"v", t:"Pronto per il tavolo", cat:"Piatti"},
+  {src:"img/l-pane-pala.jpg", s:"v", t:"Il pane sulla pala", cat:"Forno"},
+  {src:"img/l-cane-nero.jpg", s:"v", t:"In attesa del tavolo", cat:"Amici a quattro zampe"},
+  {src:"img/l-cane-arruffato.jpg", s:"v", t:"Un ospite arruffato", cat:"Amici a quattro zampe"},
+  {src:"img/l-cane-jack.jpg", s:"v", t:"Anche lui a cena", cat:"Amici a quattro zampe"},
+  {src:"img/p-specchio.jpg", s:"v", t:"Lo specchio sul giardino", cat:"Giardino"}
+];
+
 /* Bacheca: una riga per foto. Per aggiungerne: metti il file in img/ e aggiungi una riga.
    Solo persone contente, con la pizza o a tavola; le piu' allegre e luminose in testa.
    Tutte da post e reel di @mangia_prato (username verificato nei .json di materiali/);
    i file j-*, m-* e v-* sono fotogrammi dei reel o foto dei post. */
 const MOMENTI = [
-  {src:"img/m-ferragosto.jpg", w:900, h:1125, cat:"Con la pizza", t:"Tutti a tavola, a Ferragosto"},
   {src:"img/j-squadra-festa.jpg", w:720, h:947, cat:"Sorrisi", t:"La squadra al completo"},
+  {src:"img/b-schiacciata.jpg", w:900, h:1198, cat:"Con la pizza", t:"La schiacciata con l'uva"},
   {src:"img/m-hugo.jpg", w:900, h:1200, cat:"Brindisi", t:"L'Hugo di Melania"},
   {src:"img/n-pizzaiolo.jpg", w:900, h:1200, cat:"Con la pizza", t:"La ciabattina, appena sfornata"},
   {src:"img/m-famiglia.jpg", w:583, h:864, cat:"Sorrisi", t:"Diego, Melania e Luca"},
@@ -1101,21 +1171,28 @@ const MOMENTI = [
   {src:"img/j-oktober.jpg", w:800, h:1109, cat:"A tavola", t:"Il vino arriva al tavolo"},
   {src:"img/m-gaia-franco.jpg", w:900, h:1200, cat:"Sorrisi", t:"Gaia e Franco"},
   {src:"img/j-cin-cin.jpg", w:800, h:1053, cat:"Brindisi", t:"Cin cin!"},
+  {src:"img/b-pizzaiolo-verde.jpg", w:800, h:881, cat:"Con la pizza", t:"Una ciabattina in arrivo"},
   {src:"img/m-prima-servizio.jpg", w:900, h:1200, cat:"Sorrisi", t:"Prima del servizio, un momento insieme"},
   {src:"img/m-tavolata-4.jpg", w:720, h:1280, cat:"A tavola", t:"Il primo morso"},
+  {src:"img/b-cuoco-burger.jpg", w:900, h:1198, cat:"Sorrisi", t:"Il burger è pronto"},
   {src:"img/m-cane-chihuahua.jpg", w:800, h:1000, cat:"Sorrisi", t:"A cena con il suo amico"},
   {src:"img/j-morso.jpg", w:800, h:853, cat:"A tavola", t:"Si assaggia di tutto"},
+  {src:"img/b-titolari.jpg", w:720, h:998, cat:"A tavola", t:"Melania e Luca, a tavola"},
   {src:"img/m-brindisi.jpg", w:720, h:1280, cat:"Brindisi", t:"Un brindisi all'Oktoberfest del Mangia"},
   {src:"img/m-vino-tavola.jpg", w:720, h:1280, cat:"A tavola", t:"Il vino, versato al tavolo"},
+  {src:"img/b-cuoco-sorriso.jpg", w:360, h:480, cat:"Sorrisi", t:"Un saluto dalla cucina"},
   {src:"img/m-pizzaiolo.jpg", w:900, h:1200, cat:"Con la pizza", t:"Un filo d'olio sulla ciabattina"},
   {src:"img/m-tavolata-2.jpg", w:720, h:1280, cat:"A tavola", t:"A cena sotto le foglie"},
+  {src:"img/b-banco.jpg", w:800, h:1138, cat:"In sala", t:"Dal primo ordine"},
   {src:"img/m-oktoberfest.jpg", w:720, h:1280, cat:"A tavola", t:"Birra e cose buone in tavola"},
   {src:"img/m-tavolata-1.jpg", w:720, h:1280, cat:"A tavola", t:"Tavolata di settembre"},
+  {src:"img/b-sala-piena.jpg", w:800, h:1138, cat:"In sala", t:"La sala si riempie"},
   {src:"img/v-brindisi.jpg", w:676, h:1200, cat:"A tavola", t:"Una sera che non finisce"},
   {src:"img/m-tavolata-3.jpg", w:720, h:1280, cat:"A tavola", t:"Tra amici"},
+  {src:"img/b-cassa.jpg", w:800, h:1138, cat:"In sala", t:"All'ultimo sorriso"},
   {src:"img/v-tavolata.jpg", w:676, h:1200, cat:"A tavola", t:"La tavolata in giardino"},
   {src:"img/m-tavolata-5.jpg", w:720, h:1280, cat:"A tavola", t:"Si resta ancora un po'"},
-  {src:"img/m-giardino-sera.jpg", w:720, h:1280, cat:"A tavola", t:"Il giardino si riempie"},
+  {src:"img/m-giardino-sera.jpg", w:720, h:1280, cat:"In sala", t:"Il giardino si riempie"},
   {src:"img/m-giardino-notte.jpg", w:720, h:1280, cat:"A tavola", t:"Tardi, in giardino"}
 ];
 
@@ -1323,13 +1400,17 @@ render();
 $("#filters").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;cat=b.dataset.c;shown=PAGE;document.querySelectorAll("#filters button").forEach(x=>x.setAttribute("aria-pressed",x===b));render()});
 $("#more").addEventListener("click",()=>{shown+=PAGE;render()});
 
-/* lightbox */
-const lb=$("#lb"); let pos=0;
-function open(i){const l=list();pos=l.findIndex(x=>x.i===i);paint();lb.hidden=false;document.body.style.overflow="hidden";$("#lbx").focus()}
-function paint(){const x=list()[pos];$("#lbimg").src=x.src;$("#lbimg").alt=x.t;$("#lbt").innerHTML=`${x.t}<span>${x.cat}</span>`}
+/* il locale */
+$("#locale-grid").innerHTML=LOCALE.map((x,i)=>`<button class="ph-l ${x.s}" type="button" data-l="${i}" aria-label="${esc(x.t)}"><img src="${x.src}" alt="${esc(x.t)}" loading="lazy"><span class="cap"><em>${esc(x.t)}</em><span>${esc(x.cat)}</span></span></button>`).join("");
+
+/* lightbox: lo usano la bacheca e il locale */
+const lb=$("#lb"); let lbItems=[], pos=0;
+function open(items,i){lbItems=items;pos=Math.max(0,i);paint();lb.hidden=false;document.body.style.overflow="hidden";$("#lbx").focus()}
+function paint(){const x=lbItems[pos];$("#lbimg").src=x.src;$("#lbimg").alt=x.t;$("#lbt").innerHTML=`${esc(x.t)}<span>${esc(x.cat)}</span>`}
 function close(){lb.hidden=true;document.body.style.overflow=""}
-function step(d){const n=list().length;pos=(pos+d+n)%n;paint()}
-$("#wall").addEventListener("click",e=>{const c=e.target.closest(".card");if(c)open(+c.dataset.i)});
+function step(d){const n=lbItems.length;pos=(pos+d+n)%n;paint()}
+$("#wall").addEventListener("click",e=>{const c=e.target.closest(".card");if(!c)return;const l=list();open(l,l.findIndex(x=>x.i===+c.dataset.i))});
+$("#locale-grid").addEventListener("click",e=>{const c=e.target.closest(".ph-l");if(c)open(LOCALE,+c.dataset.l)});
 $("#lbx").addEventListener("click",close);$("#lbp").addEventListener("click",()=>step(-1));$("#lbn").addEventListener("click",()=>step(1));
 lb.addEventListener("click",e=>{if(e.target===lb)close()});
 document.addEventListener("keydown",e=>{if(lb.hidden)return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")step(-1);if(e.key==="ArrowRight")step(1)});
@@ -1462,7 +1543,7 @@ document.querySelectorAll("[data-reel]").forEach(b=>b.addEventListener("click",(
    scroll. Nessuno scorre da solo.
    ===================================================== */
 (function(){
-  const SEZIONI=["#courses",".collage","#reels","#team",".press.minor",".family.cards"];
+  const SEZIONI=["#courses","#locale-grid",".collage","#reels","#team",".press.minor",".family.cards"];
   function setup(el,nome){
     el.classList.add("carousel");
     const nav=document.createElement("div");
@@ -1497,7 +1578,7 @@ document.querySelectorAll("[data-reel]").forEach(b=>b.addEventListener("click",(
     new MutationObserver(build).observe(el,{childList:true});
     build();
   }
-  const NOMI={"#courses":"le portate","collage":"la serata","#reels":"i video","#team":"la squadra","press":"i riconoscimenti","family":"gli indirizzi"};
+  const NOMI={"#courses":"le portate","locale":"le foto del locale","collage":"la serata","#reels":"i video","#team":"la squadra","press":"i riconoscimenti","family":"gli indirizzi"};
   SEZIONI.forEach(sel=>{
     const el=document.querySelector(sel); if(!el) return;
     const k=Object.keys(NOMI).find(x=>sel.includes(x));
