@@ -609,6 +609,47 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
 @media (max-width:980px){.team-banner img{aspect-ratio:16/9;object-position:center 69%}}
 @media (max-width:560px){.team-banner img{aspect-ratio:4/3;object-position:center 85%}}
 
+/* ---------- caroselli su mobile (sotto 768px; sopra resta la griglia) ---------- */
+.cdots{display:none}
+@media (max-width:767px){
+  .carousel{display:flex!important;flex-wrap:nowrap;gap:12px;overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+    scrollbar-width:none;-ms-overflow-style:none;
+    margin-inline:calc(-1 * var(--gutter));padding-inline:var(--gutter);scroll-padding-inline:var(--gutter)}
+  .carousel::-webkit-scrollbar{display:none}
+  .carousel > *{flex:0 0 85vw;max-width:85vw;min-width:0;scroll-snap-align:start;scroll-snap-stop:always}
+  .cdots{display:flex;justify-content:center;flex-wrap:wrap;gap:2px;margin-top:14px}
+  .cdots button{width:26px;height:26px;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+  .cdots button::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sand);transition:background .25s,transform .25s}
+  .cdots button[aria-current="true"]::before{background:var(--wine);transform:scale(1.25)}
+  /* menu del mese */
+  .courses.carousel{border-top:0}
+  .courses.carousel .course{padding:0 0 6px;border:0}
+  /* come nasce una serata */
+  .collage.carousel{grid-auto-rows:auto}
+  .collage.carousel > .shot{aspect-ratio:4/5;height:auto}
+  .collage.carousel > blockquote{align-self:stretch;display:grid;align-content:center;gap:10px;background:var(--stone);border-left:2px solid var(--wine);padding:24px}
+  .collage.carousel > blockquote p{font-size:22px}
+  .collage.carousel > blockquote cite{font-size:11px}
+  .collage.carousel .shot figcaption{padding:44px 16px 14px}
+  .collage.carousel .shot figcaption span{font-size:18px}
+  /* i nostri video */
+  .reels.carousel{margin-top:clamp(24px,4vw,44px)}
+  .reels.carousel .reel{aspect-ratio:3/4}
+  .reels.carousel .reel .t{padding:52px 14px 14px}
+  .reels.carousel .reel .t em{font-size:17px}
+  .reels.carousel .reel .t span{display:block}
+  /* chi vi aspetta ogni sera */
+  .team.carousel .tc{grid-template-columns:1fr;grid-template-rows:auto 1fr;align-items:stretch}
+  .team.carousel .tc figure{aspect-ratio:4/5;height:auto;min-height:0}
+  .team.carousel .tc .body{padding:18px 20px 22px;align-content:start}
+  /* riconoscimenti piccoli */
+  .press.minor.carousel > a:hover{transform:none;box-shadow:none}
+  /* tre indirizzi */
+  .family.cards.carousel .fam{grid-template-columns:1fr}
+  .family.cards.carousel .fam .ph{aspect-ratio:4/3;min-height:0}
+}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -1144,28 +1185,68 @@ addEventListener("scroll",()=>{
   secs.forEach(x=>io1.observe(x));
 })();
 
-/* pizze che scorrono da sole: si possono trascinare, poi ripartono */
+/* =====================================================
+   PIZZE CHE SCORRONO DA SOLE
+   pos (decimale) e' l'unica fonte di verita': ogni frame
+   pos += dt*0.045 e poi scrollLeft = pos. Non si rilegge
+   scrollLeft per avanzare, perche' Safari lo arrotonda
+   all'intero e la striscia restava ferma.
+   Se scrollLeft si allontana da pos di oltre 2 px l'ha
+   mossa l'utente: si riallinea e si mette in pausa.
+   Pausa su touchstart/pointerdown/wheel, ripresa 1,5 s
+   dopo touchend/pointerup/scrollend (senza scrollend:
+   1,5 s dopo l'ultimo evento scroll).
+   ===================================================== */
 (function(){
   const s=document.getElementById("strip"); if(!s) return;
-  const items=[...s.children]; items.forEach(n=>{const c=n.cloneNode(true);c.setAttribute("aria-hidden","true");s.appendChild(c)});
+  [...s.children].forEach(n=>{const c=n.cloneNode(true);c.setAttribute("aria-hidden","true");s.appendChild(c)});
   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let paused=0, last=performance.now(), pos=0, down=false, sx=0, sl=0;
+  const hasScrollEnd="onscrollend" in window;
   const half=()=>s.scrollWidth/2;
-  const hold=()=>{paused=performance.now()+2200};
+  const RIPRESA=1500;
+  let pos=s.scrollLeft, last=performance.now(), paused=false, timer=0, drag=null;
+
+  function wrap(){ const h=half(); if(h<=0) return; if(pos>=h) pos-=h; else if(pos<0) pos+=h; }
+  function pause(){ paused=true; clearTimeout(timer); }
+  function resumeSoon(){
+    clearTimeout(timer);
+    timer=setTimeout(()=>{ if(drag) return; pos=s.scrollLeft; wrap(); s.scrollLeft=pos; paused=false; last=performance.now(); },RIPRESA);
+  }
   function tick(t){
     const dt=Math.min(64,t-last); last=t;
-    if(!reduce && !down && t>paused && !document.hidden){ pos=s.scrollLeft+dt*0.045; if(pos>=half()) pos-=half(); s.scrollLeft=pos; }
-    else if(s.scrollLeft>=half()) s.scrollLeft-=half();
+    if(!paused && !reduce && !document.hidden){
+      if(Math.abs(s.scrollLeft-pos)>2){ pos=s.scrollLeft; pause(); resumeSoon(); }
+      else { pos+=dt*0.045; wrap(); s.scrollLeft=pos; }
+    }
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
-  s.addEventListener("wheel",hold,{passive:true});
-  s.addEventListener("touchstart",hold,{passive:true});
-  s.addEventListener("touchmove",hold,{passive:true});
-  s.addEventListener("mouseleave",()=>{if(down){down=false;s.classList.remove("drag");hold()}});
-  s.addEventListener("mousedown",e=>{down=true;sx=e.clientX;sl=s.scrollLeft;s.classList.add("drag")});
-  addEventListener("mouseup",()=>{if(down){down=false;s.classList.remove("drag");hold()}});
-  s.addEventListener("mousemove",e=>{if(!down)return;let v=sl-(e.clientX-sx);if(v<0)v+=half();if(v>=half())v-=half();s.scrollLeft=v});
+
+  /* dito */
+  s.addEventListener("touchstart",pause,{passive:true});
+  s.addEventListener("touchend",resumeSoon,{passive:true});
+  s.addEventListener("touchcancel",resumeSoon,{passive:true});
+  /* rotella e trackpad */
+  s.addEventListener("wheel",()=>{ pause(); resumeSoon(); },{passive:true});
+  /* mouse: trascinamento a mano; il dito invece usa lo scroll nativo */
+  s.addEventListener("pointerdown",e=>{
+    pause();
+    if(e.pointerType!=="mouse") return;
+    drag={x:e.clientX,l:s.scrollLeft}; s.classList.add("drag");
+    if(s.setPointerCapture) s.setPointerCapture(e.pointerId);
+  });
+  s.addEventListener("pointermove",e=>{
+    if(!drag) return;
+    const h=half(); let v=drag.l-(e.clientX-drag.x);
+    if(v<0) v+=h; if(v>=h) v-=h;
+    s.scrollLeft=v;
+  });
+  const endDrag=()=>{ if(drag){ drag=null; s.classList.remove("drag"); } resumeSoon(); };
+  s.addEventListener("pointerup",endDrag);
+  s.addEventListener("pointercancel",e=>{ if(e.pointerType==="mouse") endDrag(); });
+  /* fine dello scroll (anche l'inerzia dopo lo swipe): la ripresa riparte da qui */
+  if(hasScrollEnd) s.addEventListener("scrollend",()=>{ if(paused && !drag) resumeSoon(); });
+  else s.addEventListener("scroll",()=>{ if(paused && !drag) resumeSoon(); },{passive:true});
 })();
 
 /* calendario menu */
@@ -1373,6 +1454,56 @@ vlb.addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-vtx;if(M
 document.querySelectorAll("[data-reel]").forEach(b=>b.addEventListener("click",()=>{
   const i=REELS.findIndex(r=>r.v===b.dataset.reel); if(i>=0) openV(i);
 }));
+/* =====================================================
+   CAROSELLI SU MOBILE
+   Sotto 768px queste sezioni diventano caroselli a
+   scorrimento col dito (lo fa il CSS .carousel); qui
+   solo i pallini sotto, cliccabili, che seguono lo
+   scroll. Nessuno scorre da solo.
+   ===================================================== */
+(function(){
+  const SEZIONI=["#courses",".collage","#reels","#team",".press.minor",".family.cards"];
+  function setup(el,nome){
+    el.classList.add("carousel");
+    const nav=document.createElement("div");
+    nav.className="cdots"; nav.setAttribute("role","group"); nav.setAttribute("aria-label","Scorri "+nome);
+    el.after(nav);
+    const pad=()=>parseFloat(getComputedStyle(el).paddingLeft)||0;
+    const offset=c=>c.getBoundingClientRect().left-el.getBoundingClientRect().left-pad();
+    function current(){
+      const items=[...el.children]; if(!items.length) return 0;
+      if(el.scrollLeft+el.clientWidth>=el.scrollWidth-2) return items.length-1;
+      let best=0,d=Infinity;
+      items.forEach((c,i)=>{const x=Math.abs(offset(c)); if(x<d){d=x;best=i}});
+      return best;
+    }
+    function update(){
+      const k=current();
+      [...nav.children].forEach((b,i)=>b.setAttribute("aria-current",i===k?"true":"false"));
+    }
+    function build(){
+      const n=el.children.length;
+      nav.innerHTML=Array.from({length:n},(_,i)=>`<button type="button" aria-label="${i+1} di ${n}"></button>`).join("");
+      nav.hidden=n<2; update();
+    }
+    nav.addEventListener("click",e=>{
+      const b=e.target.closest("button"); if(!b) return;
+      const c=el.children[[...nav.children].indexOf(b)]; if(!c) return;
+      el.scrollTo({left:el.scrollLeft+offset(c),behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+    });
+    let raf=0;
+    el.addEventListener("scroll",()=>{ if(raf) return; raf=requestAnimationFrame(()=>{raf=0;update()}); },{passive:true});
+    addEventListener("resize",update);
+    new MutationObserver(build).observe(el,{childList:true});
+    build();
+  }
+  const NOMI={"#courses":"le portate","collage":"la serata","#reels":"i video","#team":"la squadra","press":"i riconoscimenti","family":"gli indirizzi"};
+  SEZIONI.forEach(sel=>{
+    const el=document.querySelector(sel); if(!el) return;
+    const k=Object.keys(NOMI).find(x=>sel.includes(x));
+    setup(el,NOMI[k]||"");
+  });
+})();
 </script>
 
 </body>
