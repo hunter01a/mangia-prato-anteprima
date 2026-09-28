@@ -111,6 +111,23 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://mangiaprato.com/#website",
+  "name": "Mangia · Enosteria con forno a legna",
+  "url": "https://mangiaprato.com/",
+  "inLanguage": "it-IT",
+  "about": { "@id": "https://mangiaprato.com/#restaurant" },
+  "creator": {
+    "@type": "Organization",
+    "name": "LUX LAB S.R.L.",
+    "url": "https://luxlab.it"
+  }
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Belleza&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Albert+Sans:wght@300;400;500;600&display=swap">
@@ -134,6 +151,7 @@
   --bar:50px;
   --gutter:clamp(18px,4.5vw,64px);
   --max:1280px;
+  --mb-h:69px; /* altezza della barra fissa Chiama/Indicazioni su mobile, senza safe area */
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--paper)}
@@ -219,8 +237,9 @@ nav.menu a.here::after{content:"";position:absolute;left:0;right:0;bottom:0;heig
     padding:19px 0;border-bottom:1px solid var(--line)}
   nav.menu > a.here::after{display:none}
   nav.menu > a.here{color:var(--wine)}
-  nav.menu > a,nav.menu > .nav-cta{opacity:0;transform:translateY(12px)}
-  nav.menu.open > a,nav.menu.open > .nav-cta{animation:navin .5s cubic-bezier(.2,.7,.2,1) forwards}
+  nav.menu > a,nav.menu > .nav-cta,nav.menu > .nav-soc{opacity:0;transform:translateY(12px)}
+  nav.menu.open > a,nav.menu.open > .nav-cta,nav.menu.open > .nav-soc{animation:navin .5s cubic-bezier(.2,.7,.2,1) forwards}
+  nav.menu.open > *:nth-child(10){animation-delay:.49s}
   nav.menu.open > *:nth-child(1){animation-delay:.04s}
   nav.menu.open > *:nth-child(2){animation-delay:.09s}
   nav.menu.open > *:nth-child(3){animation-delay:.14s}
@@ -231,6 +250,7 @@ nav.menu a.here::after{content:"";position:absolute;left:0;right:0;bottom:0;heig
   nav.menu.open > *:nth-child(8){animation-delay:.39s}
   nav.menu.open > *:nth-child(9){animation-delay:.44s}
   nav.menu .nav-cta{display:block;margin-top:30px}
+  nav.menu .nav-soc{display:flex;justify-content:center;gap:14px;margin-top:22px}
   nav.menu .nav-cta .btn{display:flex;width:100%;border-radius:999px;text-transform:none;
     letter-spacing:.04em;font:500 13px/1 var(--sans);padding:18px 20px;color:#fff}
 }
@@ -446,18 +466,32 @@ footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-ite
 footer .logo{width:128px;height:128px;color:#fff}
 footer .acr{font:italic 400 21px/1.45 var(--serif);max-width:none}
 footer .acr b{font:normal 400 21px/1 var(--display);color:#fff}
-footer .soc{display:grid;gap:12px}
-footer .soc a{font:500 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#fff;text-decoration:none}
-footer .soc a:hover{color:#E3B98A}
+/* icone social: cerchi da 44 px, bordo sottile, inchiostro; al passaggio vino */
+.ico{width:44px;height:44px;border-radius:50%;border:1px solid rgba(29,25,22,.28);color:var(--ink);display:inline-grid;place-items:center;text-decoration:none;transition:color .25s,border-color .25s,background .25s}
+.ico svg{width:22px;height:22px}
+.ico:hover,.ico:focus-visible{color:var(--wine);border-color:var(--wine)}
+.soc,.soc-visit{display:flex;flex-wrap:wrap;gap:12px}
+.soc-visit{margin-top:22px}
+/* nel footer scuro l'inchiostro non si vedrebbe: icone chiare, al passaggio cerchio vino */
+footer .soc{justify-content:flex-end}
+footer .ico{color:#EDE6DA;border-color:rgba(237,230,218,.32)}
+footer .ico:hover,footer .ico:focus-visible{color:#fff;background:var(--wine);border-color:var(--wine)}
+/* credito */
+footer .credit{grid-column:1/-1;max-width:none;text-align:center;margin:0;padding-top:20px;border-top:1px solid rgba(168,133,79,.35);
+  font:500 17px/1.4 var(--sans);font-variant-caps:all-small-caps;letter-spacing:.16em;color:#A8854F}
+footer .credit a{color:#A8854F;text-decoration:none;font-weight:600;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;padding-bottom:2px;transition:background-size .3s}
+footer .credit a:hover,footer .credit a:focus-visible{background-size:100% 1px}
+/* menu mobile */
+.nav-soc{display:none}
 footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.14);padding-top:22px;font:400 12.5px/1.6 var(--sans);color:#A99F92}
-@media (max-width:760px){footer .wrap{grid-template-columns:1fr}}
+@media (max-width:760px){footer .wrap{grid-template-columns:1fr}footer .soc{justify-content:flex-start}}
 
 .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;font:500 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:14px 20px;z-index:95}
 .mobile-book{display:none}
 @media (max-width:700px){
   .mobile-book{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(251,249,245,.96);border-top:1px solid var(--line);backdrop-filter:blur(10px)}
   .mobile-book .btn{flex:1;padding:15px 10px}
-  footer{padding-bottom:110px}
+  footer{padding-bottom:calc(var(--mb-h) + 32px + env(safe-area-inset-bottom,0px))}
 }
 
 /* ---------- video ---------- */
@@ -700,6 +734,11 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
   <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5 20 12 7 19.5z"/></symbol>
   <symbol id="i-sound" viewBox="0 0 24 24"><path fill="currentColor" d="M4 9h3.5L12 5v14L7.5 15H4z"/><path fill="none" stroke="currentColor" stroke-width="1.7" d="M15.5 9.2a4 4 0 0 1 0 5.6M18.2 6.5a8 8 0 0 1 0 11"/></symbol>
+  <!-- Instagram, Facebook e Google Maps: tracciati di Simple Icons 13.21 (licenza CC0-1.0) -->
+  <symbol id="i-ig" viewBox="0 0 24 24"><path fill="currentColor" d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path fill="currentColor" d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></symbol>
+  <symbol id="i-gmaps" viewBox="0 0 24 24"><path fill="currentColor" d="M19.527 4.799c1.212 2.608.937 5.678-.405 8.173-1.101 2.047-2.744 3.74-4.098 5.614-.619.858-1.244 1.75-1.669 2.727-.141.325-.263.658-.383.992-.121.333-.224.673-.34 1.008-.109.314-.236.684-.627.687h-.007c-.466-.001-.579-.53-.695-.887-.284-.874-.581-1.713-1.019-2.525-.51-.944-1.145-1.817-1.79-2.671L19.527 4.799zM8.545 7.705l-3.959 4.707c.724 1.54 1.821 2.863 2.871 4.18.247.31.494.622.737.936l4.984-5.925-.029.01c-1.741.601-3.691-.291-4.392-1.987a3.377 3.377 0 0 1-.209-.716c-.063-.437-.077-.761-.004-1.198l.001-.007zM5.492 3.149l-.003.004c-1.947 2.466-2.281 5.88-1.117 8.77l4.785-5.689-.058-.05-3.607-3.035zM14.661.436l-3.838 4.563a.295.295 0 0 1 .027-.01c1.6-.551 3.403.15 4.22 1.626.176.319.323.683.377 1.045.068.446.085.773.012 1.22l-.003.016 3.836-4.561A8.382 8.382 0 0 0 14.67.439l-.009-.003zM9.466 5.868L14.162.285l-.047-.012A8.31 8.31 0 0 0 11.986 0a8.439 8.439 0 0 0-6.169 2.766l-.016.018 3.665 3.084z"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path fill="currentColor" d="M6.9 10.6a15.6 15.6 0 0 0 6.5 6.5l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1.1z"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
 </svg>
 
@@ -721,6 +760,11 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
       <a href="#squadra">Squadra</a>
       <a href="#visita">Dove siamo</a>
       <span class="nav-cta"><a class="btn wine" href="tel:+390574572917"><svg><use href="#i-phone"/></svg>Prenota: 0574 572917</a></span>
+      <span class="nav-soc">
+        <a class="ico" href="https://www.instagram.com/mangia_prato/" target="_blank" rel="noopener" aria-label="Instagram di Mangia"><svg aria-hidden="true"><use href="#i-ig"/></svg></a>
+        <a class="ico" href="https://www.facebook.com/mangiaprato/" target="_blank" rel="noopener" aria-label="Facebook di Mangia"><svg aria-hidden="true"><use href="#i-fb"/></svg></a>
+        <a class="ico" href="https://www.google.com/maps?um=1&amp;ie=UTF-8&amp;fb=1&amp;gl=it&amp;sa=X&amp;geocode=KSHPt39H9ioTMVwrma_r7pfH&amp;daddr=Via+Francesco+Ferrucci,+173,+59100+Prato+PO" target="_blank" rel="noopener" aria-label="Mangia su Google Maps"><svg aria-hidden="true"><use href="#i-gmaps"/></svg></a>
+      </span>
     </nav>
     <a class="btn wine desk" href="tel:+390574572917"><svg><use href="#i-phone"/></svg>Prenota</a>
     <button class="burger" id="burger" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="menu">
@@ -1047,6 +1091,12 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
         <a class="btn wine" href="tel:+390574572917"><svg><use href="#i-phone"/></svg>Chiama e prenota</a>
         <a class="btn" href="https://www.google.com/maps?um=1&amp;ie=UTF-8&amp;fb=1&amp;gl=it&amp;sa=X&amp;geocode=KSHPt39H9ioTMVwrma_r7pfH&amp;daddr=Via+Francesco+Ferrucci,+173,+59100+Prato+PO" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Indicazioni</a>
       </div>
+      <div class="soc-visit">
+      <a class="ico" href="https://www.instagram.com/mangia_prato/" target="_blank" rel="noopener" aria-label="Instagram di Mangia"><svg aria-hidden="true"><use href="#i-ig"/></svg></a>
+      <a class="ico" href="https://www.facebook.com/mangiaprato/" target="_blank" rel="noopener" aria-label="Facebook di Mangia"><svg aria-hidden="true"><use href="#i-fb"/></svg></a>
+      <a class="ico" href="https://www.google.com/maps?um=1&amp;ie=UTF-8&amp;fb=1&amp;gl=it&amp;sa=X&amp;geocode=KSHPt39H9ioTMVwrma_r7pfH&amp;daddr=Via+Francesco+Ferrucci,+173,+59100+Prato+PO" target="_blank" rel="noopener" aria-label="Mangia su Google Maps"><svg aria-hidden="true"><use href="#i-gmaps"/></svg></a>
+      <a class="ico" href="tel:+390574572917" aria-label="Chiama Mangia: 0574 572917"><svg aria-hidden="true"><use href="#i-tel"/></svg></a>
+    </div>
     </div>
     <div class="map">
       <iframe title="Mangia su Google Maps" src="https://maps.google.com/maps?q=43.8664446,11.1112036&amp;z=17&amp;hl=it&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
@@ -1061,11 +1111,13 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
     <svg class="logo" role="img" aria-label="Logo Mangia"><use href="#logo"/></svg>
     <p class="acr"><b>M</b>ente <b>A</b>perta <b>N</b>el <b>G</b>rande <b>I</b>tinerario <b>A</b>limentare</p>
     <div class="soc">
-      <a href="https://www.instagram.com/mangia_prato/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.facebook.com/mangiaprato/" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://www.google.com/maps?um=1&amp;ie=UTF-8&amp;fb=1&amp;gl=it&amp;sa=X&amp;geocode=KSHPt39H9ioTMVwrma_r7pfH&amp;daddr=Via+Francesco+Ferrucci,+173,+59100+Prato+PO" target="_blank" rel="noopener">Google Maps</a>
+      <a class="ico" href="https://www.instagram.com/mangia_prato/" target="_blank" rel="noopener" aria-label="Instagram di Mangia"><svg aria-hidden="true"><use href="#i-ig"/></svg></a>
+      <a class="ico" href="https://www.facebook.com/mangiaprato/" target="_blank" rel="noopener" aria-label="Facebook di Mangia"><svg aria-hidden="true"><use href="#i-fb"/></svg></a>
+      <a class="ico" href="https://www.google.com/maps?um=1&amp;ie=UTF-8&amp;fb=1&amp;gl=it&amp;sa=X&amp;geocode=KSHPt39H9ioTMVwrma_r7pfH&amp;daddr=Via+Francesco+Ferrucci,+173,+59100+Prato+PO" target="_blank" rel="noopener" aria-label="Mangia su Google Maps"><svg aria-hidden="true"><use href="#i-gmaps"/></svg></a>
+      <a class="ico" href="tel:+390574572917" aria-label="Chiama Mangia: 0574 572917"><svg aria-hidden="true"><use href="#i-tel"/></svg></a>
     </div>
     <div class="legal"><span>Mangia · Enosteria con forno a legna · Via F. Ferrucci 173, 59100 Prato · Tel. 0574 572917</span><span>© <span id="cy">2026</span> Mangia</span></div>
+    <p class="credit">Sito realizzato da <a href="https://luxlab.it" target="_blank" rel="noopener">LuxLab</a></p>
   </div>
 </footer>
 
@@ -1282,14 +1334,24 @@ addEventListener("scroll",()=>{
 /* =====================================================
    PIZZE CHE SCORRONO DA SOLE
    pos (decimale) e' l'unica fonte di verita': ogni frame
-   pos += dt*0.045 e poi scrollLeft = pos. Non si rilegge
-   scrollLeft per avanzare, perche' Safari lo arrotonda
-   all'intero e la striscia restava ferma.
-   Se scrollLeft si allontana da pos di oltre 2 px l'ha
-   mossa l'utente: si riallinea e si mette in pausa.
-   Pausa su touchstart/pointerdown/wheel, ripresa 1,5 s
-   dopo touchend/pointerup/scrollend (senza scrollend:
-   1,5 s dopo l'ultimo evento scroll).
+   pos += dt*0.045 e poi scrollLeft = pos (Safari arrotonda
+   scrollLeft all'intero, quindi non si rilegge per avanzare).
+   - Solo quando la striscia e' visibile: se scrollLeft si
+     allontana da pos di oltre 2 px l'ha mossa l'utente,
+     si riallinea e si mette in pausa. Fuori schermo non va
+     mai in pausa.
+   - Pausa su touchstart/pointerdown/wheel; ripresa 1,5 s
+     dopo touchend/pointerup/scrollend (senza scrollend:
+     1,5 s dopo l'ultimo scroll).
+   - Reset (riparte subito) quando rientra nello schermo,
+     quando la pagina torna visibile, su pageshow (anche
+     dalla cache di Safari) e dopo un clic nel menu.
+   - Se il dito parte sulla striscia ma fa scorrere la pagina
+     in verticale, la striscia non resta in pausa: riparte
+     1,5 s dopo la fine dello scroll.
+   - Watchdog: in pausa da oltre 4 s senza dito o mouse
+     premuto riparte da sola (su iOS il touchend a volte
+     non arriva, es. se il dito fa scorrere la pagina).
    ===================================================== */
 (function(){
   const s=document.getElementById("strip"); if(!s) return;
@@ -1297,29 +1359,63 @@ addEventListener("scroll",()=>{
   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const hasScrollEnd="onscrollend" in window;
   const half=()=>s.scrollWidth/2;
-  const RIPRESA=1500;
-  let pos=s.scrollLeft, last=performance.now(), paused=false, timer=0, drag=null;
+  const RIPRESA=1500, WATCHDOG=4000, DITO_FERMO=4000;
+  let pos=s.scrollLeft, last=performance.now(), paused=false, pausedAt=0, timer=0, drag=null;
+  let visible=false, touching=false, lastTouch=0;
 
   function wrap(){ const h=half(); if(h<=0) return; if(pos>=h) pos-=h; else if(pos<0) pos+=h; }
-  function pause(){ paused=true; clearTimeout(timer); }
+  function reset(){
+    clearTimeout(timer); drag=null; s.classList.remove("drag"); touching=false;
+    pos=s.scrollLeft; wrap(); s.scrollLeft=pos;
+    paused=false; last=performance.now();
+  }
+  function pause(){ paused=true; pausedAt=performance.now(); clearTimeout(timer); }
   function resumeSoon(){
     clearTimeout(timer);
-    timer=setTimeout(()=>{ if(drag) return; pos=s.scrollLeft; wrap(); s.scrollLeft=pos; paused=false; last=performance.now(); },RIPRESA);
+    timer=setTimeout(()=>{ if(drag||fingerDown()) return; reset(); },RIPRESA);
   }
+  /* un dito conta come premuto solo se si e' mosso da poco: se il touchend si perde non blocca per sempre */
+  function fingerDown(){ return touching && performance.now()-lastTouch<DITO_FERMO; }
+
   function tick(t){
     const dt=Math.min(64,t-last); last=t;
+    if(paused && !drag && !fingerDown() && t-pausedAt>WATCHDOG) reset();
     if(!paused && !reduce && !document.hidden){
-      if(Math.abs(s.scrollLeft-pos)>2){ pos=s.scrollLeft; pause(); resumeSoon(); }
+      if(visible && Math.abs(s.scrollLeft-pos)>2){ pos=s.scrollLeft; pause(); resumeSoon(); }
       else { pos+=dt*0.045; wrap(); s.scrollLeft=pos; }
     }
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 
-  /* dito */
-  s.addEventListener("touchstart",pause,{passive:true});
-  s.addEventListener("touchend",resumeSoon,{passive:true});
-  s.addEventListener("touchcancel",resumeSoon,{passive:true});
+  /* visibile o no: quando rientra nello schermo riparte da dov'e' */
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(es=>es.forEach(e=>{
+      const was=visible; visible=e.isIntersecting;
+      if(visible && !was) reset();
+    }),{threshold:0}).observe(s);
+  } else visible=true;
+
+  /* pagina di nuovo visibile, o ripresa dalla cache di Safari */
+  document.addEventListener("visibilitychange",()=>{ if(!document.hidden) reset(); });
+  addEventListener("pageshow",reset);
+
+  /* menu: un clic su una voce o la chiusura non la lasciano in pausa */
+  document.querySelectorAll("nav.menu a, #burger").forEach(el=>el.addEventListener("click",()=>setTimeout(reset,0)));
+
+  /* dito: i fine-tocco si ascoltano su tutto il documento, cosi' non si perdono */
+  let touchX=0;
+  s.addEventListener("touchstart",()=>{ touching=true; lastTouch=performance.now(); touchX=s.scrollLeft; pause(); },{passive:true});
+  /* il dito e' partito sulla striscia ma sta facendo scorrere la pagina in verticale:
+     non e' uno swipe della striscia, quindi la si libera e riparte 1,5 s dopo la fine dello scroll */
+  addEventListener("scroll",()=>{
+    if(touching && Math.abs(s.scrollLeft-touchX)<3){ touching=false; }
+    if(paused && !drag && !touching) resumeSoon();
+  },{passive:true});
+  s.addEventListener("touchmove",()=>{ lastTouch=performance.now(); },{passive:true});
+  const touchEnd=()=>{ if(!touching) return; touching=false; resumeSoon(); };
+  document.addEventListener("touchend",touchEnd,{passive:true,capture:true});
+  document.addEventListener("touchcancel",touchEnd,{passive:true,capture:true});
   /* rotella e trackpad */
   s.addEventListener("wheel",()=>{ pause(); resumeSoon(); },{passive:true});
   /* mouse: trascinamento a mano; il dito invece usa lo scroll nativo */
