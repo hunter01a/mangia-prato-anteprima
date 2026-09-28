@@ -811,14 +811,12 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
         <div class="body"><span class="tag">La classica</span><h3>Napoletana</h3><p>Cornicione alto e morbido, cotta nel forno a legna. Dalle classiche alle proposte della stagione.</p></div>
       </article>
       <article class="dcard">
-        <img src="img/r-card-ciabattina-mortadella.jpg" alt="La ciabattina con la mortadella, appena sfornata" loading="lazy">
+        <img src="img/r-card-ciabattina-pomodorini.jpg" alt="La ciabattina con pomodorini e mozzarella, appena sfornata" loading="lazy">
         <div class="body"><span class="tag">Nata da noi</span><h3>Ciabattina</h3><p>La nostra creazione, messa a punto con il pizzaiolo Salvatore Botta. Il Gambero Rosso la cita come il piatto che ci distingue.</p></div>
       </article>
     </div>
     <div class="strip" id="strip" aria-label="Le pizze, scorrono da sole">
       <figure><img src="img/r-s-margherita.jpg" alt="" loading="lazy"><figcaption>Margherita</figcaption></figure>
-      <figure><img src="img/r-s-salsiccia-friarielli.jpg" alt="" loading="lazy"><figcaption>Salsiccia e friarielli</figcaption></figure>
-      <figure><img src="img/r-s-forno.jpg" alt="" loading="lazy"><figcaption>Ciabattina, appena sfornata</figcaption></figure>
       <figure><img src="img/r-s-ciabattina.jpg" alt="" loading="lazy"><figcaption>Ciabattina con basilico</figcaption></figure>
       <figure><img src="img/r-s-uva.jpg" alt="" loading="lazy"><figcaption>Schiacciata con l'uva</figcaption></figure>
       <figure><img src="img/r-s-mozzarella.jpg" alt="" loading="lazy"><figcaption>La stesa, poi la mozzarella</figcaption></figure>
@@ -1087,7 +1085,7 @@ footer .legal{grid-column:1/-1;display:flex;justify-content:space-between;gap:12
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Foto">
   <button class="x" id="lbx" type="button" aria-label="Chiudi">×</button>
   <button class="prev" id="lbp" type="button" aria-label="Foto precedente">‹</button>
-  <figure><img id="lbimg" alt=""><figcaption id="lbt"></figcaption></figure>
+  <figure id="lbfig"><figcaption id="lbt"></figcaption></figure>
   <button class="next" id="lbn" type="button" aria-label="Foto successiva">›</button>
 </div>
 
@@ -1184,7 +1182,8 @@ const MOMENTI = [
   {src:"img/r-m-risata.jpg", w:720, h:723, cat:"A tavola", t:"Una risata tra amici"},
   {src:"img/r-m-oktober.jpg", w:720, h:889, cat:"A tavola", t:"Il vino arriva al tavolo"},
   {src:"img/r-m-gaia-franco.jpg", w:900, h:1067, cat:"Sorrisi", t:"Gaia e Franco"},
-  {src:"img/r-post-pizza-birra.jpg", w:1080, h:1440, cat:"Pizza", t:"Pizza e birra, salsiccia e friarielli"},
+  {src:"img/r-card-ciabattina-mortadella.jpg", w:619, h:619, cat:"Con la pizza", t:"La ciabattina con la mortadella"},
+  {src:"img/r-post-pizza-birra.jpg", w:1080, h:1440, cat:"Con la pizza", t:"Pizza e birra, salsiccia e friarielli"},
   {src:"img/j-cin-cin.jpg", w:800, h:1053, cat:"Brindisi", t:"Cin cin!"},
   {src:"img/b-pizzaiolo-verde.jpg", w:800, h:881, cat:"Con la pizza", t:"Una ciabattina in arrivo"},
   {src:"img/m-prima-servizio.jpg", w:900, h:1200, cat:"Sorrisi", t:"Prima del servizio, un momento insieme"},
@@ -1424,7 +1423,7 @@ $("#locale-grid").innerHTML=LOCALE.map((x,i)=>`<button class="ph-l ${x.s}" type=
 /* lightbox: lo usano la bacheca e il locale */
 const lb=$("#lb"); let lbItems=[], pos=0;
 function open(items,i){lbItems=items;pos=Math.max(0,i);paint();lb.hidden=false;document.body.style.overflow="hidden";$("#lbx").focus()}
-function paint(){const x=lbItems[pos];$("#lbimg").src=x.src;$("#lbimg").alt=x.t;$("#lbt").innerHTML=`${esc(x.t)}<span>${esc(x.cat)}</span>`}
+function paint(){const x=lbItems[pos];let im=$("#lbimg");if(!im){im=document.createElement("img");im.id="lbimg";$("#lbfig").prepend(im)}im.src=x.src;im.alt=x.t;$("#lbt").innerHTML=`${esc(x.t)}<span>${esc(x.cat)}</span>`}
 function close(){lb.hidden=true;document.body.style.overflow=""}
 function step(d){const n=lbItems.length;pos=(pos+d+n)%n;paint()}
 $("#wall").addEventListener("click",e=>{const c=e.target.closest(".card");if(!c)return;const l=list();open(l,l.findIndex(x=>x.i===+c.dataset.i))});
